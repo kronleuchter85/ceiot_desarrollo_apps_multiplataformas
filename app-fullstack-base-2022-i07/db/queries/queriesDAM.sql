@@ -1,0 +1,11 @@
+select DISTINCT m.DispositivoId 
+    , max(m.fecha) 
+    , max(m.valor) lastReading
+    , d.nombre dispositivo 
+    , d.ubicacion
+    , e.nombre ElectrovalvulaId
+    , e.ElectrovalvulaId 
+from DAM.Dispositivos d 
+join DAM.Mediciones m on m.DispositivoId = d.DispositivoId
+join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId
+group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId

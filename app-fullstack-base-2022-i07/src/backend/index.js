@@ -1,5 +1,20 @@
 //=======[ Settings, Imports & Data ]==========================================
 
+
+
+var query_1 = "select DISTINCT m.DispositivoId " +
+", max(m.fecha) "+
+", max(m.valor) lastReading "+
+", d.nombre dispositivo "+
+", d.ubicacion "+
+", e.nombre ElectrovalvulaId "+
+", e.ElectrovalvulaId "+
+"from DAM.Dispositivos d "+
+"join DAM.Mediciones m on m.DispositivoId = d.DispositivoId "+
+"join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId "+
+"group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId";
+
+
 var PORT    = 3000;
 
 const cors = require('cors');
@@ -27,7 +42,10 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/devices/', function(req, res, next) {
-    pool.query('Select * from Devices', function(err, result, fields) {
+
+
+
+    pool.query(query_1, function(err, result, fields) {
         if (err) {
             res.send(err).status(400);
             return;
@@ -35,6 +53,18 @@ app.get('/devices/', function(req, res, next) {
         res.send(result);
     });
 });
+
+app.get('/devices/', function(req, res, next) {
+    pool.query('Select * from Dispositivos', function(err, result, fields) {
+        if (err) {
+            res.send(err).status(400);
+            return;
+        }
+        res.send(result);
+    });
+});
+
+
 
 app.listen(PORT, function(req, res) {
     console.log("NodeJS API running correctly");

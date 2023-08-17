@@ -6,7 +6,7 @@ const configMysql = {
     port: '3306',
     user: 'root',
     password: 'userpass',
-    database: 'smart_home'
+    database: 'DAM'
 }
 
 const pool = mysql.createPool(configMysql);
