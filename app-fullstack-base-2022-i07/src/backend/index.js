@@ -27,7 +27,7 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/devices/', function(req, res, next) {
-    pool.query('Select * from Dispositivos', function(err, result, fields) {
+    pool.query('Select * from Devices', function(err, result, fields) {
         if (err) {
             res.send(err).status(400);
             return;

@@ -1,0 +1,28 @@
+<div>
+    <h1>{{nombre}} <u>{{apellido | spacefy}}</u></h1>
+
+    <input [(ngModel)]="nombre" />
+    <br>
+    <input [(ngModel)]="apellido" [disabled]="!estaHabilitado" />
+</div>
+
+<!-- <div *ngFor="let e of devices; let i=index">
+    <p>{{e.name}}</p><button (click)="showReading(e)">Mostrar Lectura</button>
+</div> -->
+
+<button appColorear [disabled]="!estaHabilitado" (click)="onClick(1)">{{textoBtn}}</button>
+<button (click)="cambiar()">Deshabilitar Botón</button>
+
+
+
+<ion-accordion-group *ngFor="let e of devices; let i=index">
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>{{e.name}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <button (click)="showReading(e)">Mostrar Lectura</button>
+        
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
