@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Dispositivo } from '../interfaces/dispositivo';
@@ -19,13 +20,24 @@ export class ListadoService {
     {id:1, name:"lampara" , lastReading:85},
   ];
 
+  corsHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
-  constructor() { }
+  constructor(
+    public httpClient:HttpClient
+  ) { }
 
-  getDispositivos():Dispositivo[]{
-    return this.devices;
+  getDispositivos():  Observable<Dispositivo[]> {
+     return this.httpClient.get<Dispositivo[]>('http://localhost:8000/devices' , {
+      headers: this.corsHeaders
+    });
   }
 
+
+  // getDispositivos():  Dispositivo[] {
+  //   return this.devices;
+  // }
 
   private refresh: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 

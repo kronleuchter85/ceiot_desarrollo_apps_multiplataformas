@@ -21,7 +21,11 @@ import { DetalleSensorComponent } from './detalle-sensor/detalle-sensor.componen
     , DetalleSensorComponent
      , SpacefyPipe , ColorearDirective
   ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule , FormsModule 
+  imports: [BrowserModule, IonicModule.forRoot()
+    , AppRoutingModule
+    , HttpClientModule 
+    , FormsModule
+    , HttpClientModule 
    ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }],
   bootstrap: [AppComponent],
