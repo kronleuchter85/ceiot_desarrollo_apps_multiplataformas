@@ -1,5 +1,9 @@
 export interface Dispositivo {
     id: number,
     name: string,
-    lastReading:number
+    lastReadingValue:number,
+    location: string,
+    lastReadingDate: string,
+    valveName: string,
+    valveId: number
 }

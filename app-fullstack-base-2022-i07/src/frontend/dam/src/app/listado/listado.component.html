@@ -4,13 +4,13 @@
     <input [(ngModel)]="nombre" />
     <br>
     <input [(ngModel)]="apellido" [disabled]="!estaHabilitado" />
-</div> -->
+</div>
 
-<!-- <div *ngFor="let e of devices; let i=index">
+<div *ngFor="let e of devices; let i=index">
     <p>{{e.name}}</p><button (click)="showReading(e)">Mostrar Lectura</button>
-</div> -->
+</div>
 
-<!-- <button appColorear [disabled]="!estaHabilitado" (click)="onClick(1)">{{textoBtn}}</button>
+<button id="buttonAceptar" appColorear [disabled]="!estaHabilitado" (click)="onClick(1)">{{textoBtn}}</button>
 <button (click)="cambiar()">Deshabilitar Botón</button> -->
 
 
@@ -20,6 +20,26 @@
       <ion-item slot="header" color="light">
         <ion-label>{{e.name}}</ion-label>
       </ion-item>
+      <div class="ion-padding" slot="content">
+        <table style="width: 40%;">
+          <tr>
+            <td>Fecha Ultima lectura</td>
+            <td>{{e.lastReadingDate}}</td>
+          </tr>
+          <tr>
+            <td >Ultima lectura</td>
+            <td>{{e.lastReadingValue}}</td>
+          </tr>
+          <tr>
+            <td>Ubicacion</td>
+            <td>{{e.location}}</td>
+          </tr>
+          <tr>
+            <td>Electrovalvula</td>
+            <td>{{e.valveName}}</td>
+          </tr>
+        </table>
+      </div>
       <div class="ion-padding" slot="content">
         <button (click)="showReading(e)">Mostrar Lectura</button>
       </div>

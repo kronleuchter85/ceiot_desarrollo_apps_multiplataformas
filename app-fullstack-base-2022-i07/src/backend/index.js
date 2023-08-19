@@ -2,13 +2,13 @@
 
 
 
-var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId " +
+var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId id" +
     ", max(m.fecha) lastReadingTime "+
     ", max(m.valor) lastReadingValue "+
-    ", d.nombre dispositivo "+
-    ", d.ubicacion "+
-    ", e.nombre Electrovalvula "+
-    ", e.ElectrovalvulaId "+
+    ", d.nombre name "+
+    ", d.ubicacion location "+
+    ", e.nombre valveName "+
+    ", e.ElectrovalvulaId valveId "+
     "from DAM.Dispositivos d "+
     "join DAM.Mediciones m on m.DispositivoId = d.DispositivoId "+
     "join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId "+

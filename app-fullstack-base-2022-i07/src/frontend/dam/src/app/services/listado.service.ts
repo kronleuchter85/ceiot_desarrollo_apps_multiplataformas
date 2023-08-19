@@ -6,18 +6,17 @@ import { Dispositivo } from '../interfaces/dispositivo';
 @Injectable(
   {
   providedIn: 'root'
-}
-)
+})
 export class ListadoService {
 
 
   devices:Dispositivo[] = [
-    {id:1, name:"lampara" , lastReading:15},
-    {id:1, name:"lampara" , lastReading:30},
-    {id:1, name:"lampara" , lastReading:25},
-    {id:1, name:"lampara" , lastReading:60},
-    {id:1, name:"lampara" , lastReading:42},
-    {id:1, name:"lampara" , lastReading:85},
+    {id:1, name:"Sensor 1" , lastReadingValue:15 , lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
+    {id:1, name:"Sensor 2" , lastReadingValue:30, lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
+    {id:1, name:"Sensor 3" , lastReadingValue:25, lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
+    {id:1, name:"Sensor 4" , lastReadingValue:60, lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
+    {id:1, name:"Sensor 5" , lastReadingValue:42, lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
+    {id:1, name:"Sensor 6" , lastReadingValue:85, lastReadingDate: "2023-08-17T16:49:04.000Z" , location: "Patio" , valveId: 1 , valveName: "eLPatio"},
   ];
 
   corsHeaders = new HttpHeaders({
@@ -42,12 +41,10 @@ export class ListadoService {
   private refresh: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   public getRefresh(): Observable<number> {
-  
      return this.refresh.asObservable();
   }
   
   public setRefresh(value: number): void {
-  
      this.refresh.next(value);
   } 
 

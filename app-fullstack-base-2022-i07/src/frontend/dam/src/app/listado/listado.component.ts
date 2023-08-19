@@ -51,6 +51,6 @@ export class ListadoComponent {
   }
 
   showReading(d:Dispositivo){
-    this.listadoServ.setRefresh(d.lastReading);
+    this.listadoServ.setRefresh(d.lastReadingValue);
   }
 }
