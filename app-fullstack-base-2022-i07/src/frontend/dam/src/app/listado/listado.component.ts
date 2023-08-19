@@ -17,10 +17,10 @@ export class ListadoComponent {
   devices : Dispositivo[] = [];
 
   constructor( private listadoServ:ListadoService ) { 
-    // this.devices = listadoServ.getDispositivos();
-    this.listadoServ.getDispositivos().subscribe( data => {
-      console.log(data);
-    });
+    this.devices = listadoServ.getDispositivos();
+    // this.listadoServ.getDispositivos().subscribe( data => {
+    //   console.log(data);
+    // });
 
   }
 

@@ -9,3 +9,7 @@ from DAM.Dispositivos d
 join DAM.Mediciones m on m.DispositivoId = d.DispositivoId
 join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId
 group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId
+
+
+
+insert into DAM.Log_riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)

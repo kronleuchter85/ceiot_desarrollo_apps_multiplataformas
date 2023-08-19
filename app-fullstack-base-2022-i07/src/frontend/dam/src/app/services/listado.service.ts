@@ -28,16 +28,16 @@ export class ListadoService {
     public httpClient:HttpClient
   ) { }
 
-  getDispositivos():  Observable<Dispositivo[]> {
-     return this.httpClient.get<Dispositivo[]>('http://localhost:8000/devices' , {
-      headers: this.corsHeaders
-    });
-  }
-
-
-  // getDispositivos():  Dispositivo[] {
-  //   return this.devices;
+  // getDispositivos():  Observable<Dispositivo[]> {
+  //    return this.httpClient.get<Dispositivo[]>('http://localhost:8000/devices' , {
+  //     headers: this.corsHeaders
+  //   });
   // }
+
+
+  getDispositivos():  Dispositivo[] {
+    return this.devices;
+  }
 
   private refresh: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
