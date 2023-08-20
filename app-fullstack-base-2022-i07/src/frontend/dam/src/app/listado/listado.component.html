@@ -17,7 +17,7 @@
 
 <ion-accordion-group *ngFor="let e of devices; let i=index">
     <ion-accordion value="first">
-      <ion-item slot="header" color="light">
+      <ion-item showReading id="{{i}}" slot="header" color="light">
         <ion-label>{{e.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
