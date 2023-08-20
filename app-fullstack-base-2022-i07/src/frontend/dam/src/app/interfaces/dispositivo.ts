@@ -1,3 +1,6 @@
+import { Medicion } from "./medicion";
+import {  Riego } from "./riego";
+
 export interface Dispositivo {
     id: number,
     name: string,
@@ -5,5 +8,8 @@ export interface Dispositivo {
     location: string,
     lastReadingDate: string,
     valveName: string,
-    valveId: number
+    valveId: number,
+    riegos: Riego[],
+    mediciones: Medicion[]
+
 }

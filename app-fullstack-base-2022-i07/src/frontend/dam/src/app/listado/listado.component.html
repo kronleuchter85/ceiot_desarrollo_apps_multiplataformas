@@ -39,9 +39,70 @@
             <td>{{e.valveName}}</td>
           </tr>
         </table>
+        
+        <ion-accordion-group >
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>Riegos</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <table style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th >Fecha</th>
+                    <th >apertura</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let r of e.riegos; let y=index">
+                  <tr>
+                    <td>{{r.id}}</td>
+                    <td>{{r.fecha}}</td>
+                    <td>{{r.apertura}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group >
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>Mediciones</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <table  style="width: 100%;">
+               
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Valor</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let r of e.mediciones; let y=index">
+                  <tr>
+                    <td>{{r.id}}</td>
+                    <td>{{r.fecha}}</td>
+                    <td>{{r.valor}}</td>
+                  </tr>
+                </tbody>
+               
+              </table>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
       </div>
+      
+
+
+
       <div class="ion-padding" slot="content">
         <button (click)="showReading(e)">Mostrar Lectura</button>
+        <br>
+        <button (click)="showReading(e)">Abrir Electrovalvula</button>
       </div>
+
     </ion-accordion>
   </ion-accordion-group>
