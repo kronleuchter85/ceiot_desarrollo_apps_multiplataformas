@@ -1,27 +1,9 @@
-<!-- <div>
-    <h1>{{nombre}} <u>{{apellido | spacefy}}</u></h1>
-
-    <input [(ngModel)]="nombre" />
-    <br>
-    <input [(ngModel)]="apellido" [disabled]="!estaHabilitado" />
-</div>
-
-<div *ngFor="let e of devices; let i=index">
-    <p>{{e.name}}</p><button (click)="showReading(e)">Mostrar Lectura</button>
-</div>
-
-<button id="buttonAceptar" appColorear [disabled]="!estaHabilitado" (click)="onClick(1)">{{textoBtn}}</button>
-<button (click)="cambiar()">Deshabilitar Botón</button> -->
-
-
-
 <ion-accordion-group *ngFor="let e of devices; let i=index">
     <ion-accordion value="first">
       <ion-item showReading id="{{i}}" slot="header" color="light">
         <ion-label>{{e.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-
 
         <table style="width: 100%;">
           <tr>
@@ -52,10 +34,6 @@
             </td>
           </tr>
         </table>
-
-
-      
-
         <br>
         <ion-accordion-group *ngIf="e.riegos.length > 0">
           <ion-accordion value="first">
@@ -109,11 +87,5 @@
           </ion-accordion>
         </ion-accordion-group>
       </div>
-      
-
-
-
-     
-
     </ion-accordion>
   </ion-accordion-group>

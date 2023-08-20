@@ -2,7 +2,7 @@
 //correr antes npm install --save highcharts
 import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { ListadoService } from '../services/listado.service';
+import { ListadoService } from '../../services/listado.service';
 declare var require: any;
 require('highcharts/highcharts-more')(Highcharts);
 require('highcharts/modules/solid-gauge')(Highcharts);

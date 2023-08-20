@@ -11,7 +11,7 @@ import { ListadoComponent } from './components/listado/listado.component';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { ShowReadingDirective } from './directives/show-reading.directive';
 import { FormsModule } from '@angular/forms';
-import { DetalleSensorComponent } from './detalle-sensor/detalle-sensor.component';
+import { DetalleSensorComponent } from './components/detalle-sensor/detalle-sensor.component';
 
 @NgModule({
   declarations: [AppComponent ,ListadoComponent
