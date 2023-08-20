@@ -21,32 +21,49 @@
         <ion-label>{{e.name}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <table style="width: 40%;">
+
+
+        <table style="width: 100%;">
           <tr>
-            <td>Fecha Ultima lectura</td>
-            <td>{{e.lastReadingDate}}</td>
-          </tr>
-          <tr>
-            <td >Ultima lectura</td>
-            <td>{{e.lastReadingValue}}</td>
-          </tr>
-          <tr>
-            <td>Ubicacion</td>
-            <td>{{e.location}}</td>
-          </tr>
-          <tr>
-            <td>Electrovalvula</td>
-            <td>{{e.valveName}}</td>
+            <td style="padding-left: 20px; width: 60%;">
+              <table style="width: 40%; ">
+                <tr>
+                  <td>Fecha Ultima lectura</td>
+                  <td>{{e.lastReadingDate | formatDate}}</td>
+                </tr>
+                <tr>
+                  <td >Ultima lectura</td>
+                  <td>{{e.lastReadingValue}}</td>
+                </tr>
+                <tr>
+                  <td>Ubicacion</td>
+                  <td>{{e.location}}</td>
+                </tr>
+                <tr>
+                  <td>Electrovalvula</td>
+                  <td>{{e.valveName}}</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+                <button (click)="showReading(e)">Mostrar Lectura</button>
+                <br>
+                <button (click)="showReading(e)">Abrir Electrovalvula</button>
+            </td>
           </tr>
         </table>
 
+
+      
+
+        <br>
         <ion-accordion-group *ngIf="e.riegos.length > 0">
           <ion-accordion value="first">
             <ion-item slot="header" color="light">
               <ion-label>Riegos</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
-              <table style="width: 100%;">
+              <table style="width: 100%; text-align: center;">
                 <thead>
                   <tr>
                     <th>Id</th>
@@ -72,8 +89,7 @@
               <ion-label>Mediciones</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
-              <table  style="width: 100%;">
-               
+              <table style="width: 100%; text-align: center;">
                 <thead>
                   <tr>
                     <th>Id</th>
@@ -88,7 +104,6 @@
                     <td>{{r.valor}}</td>
                   </tr>
                 </tbody>
-               
               </table>
             </div>
           </ion-accordion>
@@ -98,11 +113,7 @@
 
 
 
-      <div class="ion-padding" slot="content">
-        <button (click)="showReading(e)">Mostrar Lectura</button>
-        <br>
-        <button (click)="showReading(e)">Abrir Electrovalvula</button>
-      </div>
+     
 
     </ion-accordion>
   </ion-accordion-group>

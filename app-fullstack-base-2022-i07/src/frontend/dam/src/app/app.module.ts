@@ -7,13 +7,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-// import { DetalleSensorComponent } from './detalle-sensor/detalle-sensor.component';
-// import { ListadoModule } from './listado/listado.module';
-import { ListadoComponent } from './listado/listado.component';
+import { ListadoComponent } from './components/listado/listado.component';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { ShowReadingDirective } from './directives/show-reading.directive';
 import { FormsModule } from '@angular/forms';
-import { ListadoService } from './services/listado.service';
 import { DetalleSensorComponent } from './detalle-sensor/detalle-sensor.component';
 
 @NgModule({
