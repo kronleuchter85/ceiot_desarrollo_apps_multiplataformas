@@ -1,18 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'spacefy'
+  name: 'formatDate'
 })
-export class SpacefyPipe implements PipeTransform {
+export class FormatDatePipe implements PipeTransform {
 
-  transform(value: string, ...args: unknown[]): unknown {
+  transform(value: string, ...args: unknown[]): string {
     
-    let result = '';
-    for(let i=0 ; i<value.length ; i++){
-      result += value.charAt(i);
-      result += ' ';
-    }
-    return result;
+    return new Date(value).toDateString()
+  
   }
 
 }

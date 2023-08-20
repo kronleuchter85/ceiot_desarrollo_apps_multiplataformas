@@ -42,10 +42,7 @@ export class ListadoService {
       , {apertura:true , electrovalvulaId:1 , fecha: '2023-03-03' , id:2},
       {apertura:true , electrovalvulaId:1 , fecha: '2023-03-03' , id:3}, ] 
     , mediciones:[
-      {dispositivoId:1 , fecha: '2023-03-03', id:1, valor:'12'},
-      {dispositivoId:2 , fecha: '2023-03-03', id:1, valor:'12'},
-      {dispositivoId:3 , fecha: '2023-03-03', id:1, valor:'12'},
-      {dispositivoId:4 , fecha: '2023-03-03', id:1, valor:'12'}
+      
     ]},
     {id:1, name:"Sensor 4" , lastReadingValue:60, lastReadingDate: "2023-08-17T16:49:04.000Z" 
     , location: "Patio" , valveId: 1 , valveName: "eLPatio" , riegos: [
@@ -60,9 +57,7 @@ export class ListadoService {
     ]},
     {id:1, name:"Sensor 5" , lastReadingValue:42, lastReadingDate: "2023-08-17T16:49:04.000Z" 
     , location: "Patio" , valveId: 1 , valveName: "eLPatio" , riegos: [
-      {apertura:true , electrovalvulaId:1 , fecha: '2023-03-03' , id:1}
-      , {apertura:true , electrovalvulaId:1 , fecha: '2023-03-03' , id:2},
-      {apertura:true , electrovalvulaId:1 , fecha: '2023-03-03' , id:3}, ] 
+     ] 
     , mediciones:[
       {dispositivoId:1 , fecha: '2023-03-03', id:1, valor:'12'},
       {dispositivoId:2 , fecha: '2023-03-03', id:1, valor:'12'},
