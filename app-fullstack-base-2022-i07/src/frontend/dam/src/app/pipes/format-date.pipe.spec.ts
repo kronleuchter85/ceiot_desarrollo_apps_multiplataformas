@@ -1,8 +1,8 @@
-import { SpacefyPipe } from './spacefy.pipe';
+import { FormatDatePipe } from './format-date.pipe';
 
 describe('SpacefyPipe', () => {
   it('create an instance', () => {
-    const pipe = new SpacefyPipe();
+    const pipe = new FormatDatePipe();
     expect(pipe).toBeTruthy();
   });
 });
