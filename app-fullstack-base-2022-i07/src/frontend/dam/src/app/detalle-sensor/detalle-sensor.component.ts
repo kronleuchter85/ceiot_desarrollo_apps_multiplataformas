@@ -75,7 +75,7 @@ export class DetalleSensorComponent implements OnInit {
           plotShadow: false
         }
         ,title: {
-          text: 'Sensor N° 1'
+          text: 'Lectura del Sensor'
         }
 
         ,credits:{enabled:false}
