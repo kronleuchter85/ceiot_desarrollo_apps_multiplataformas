@@ -8,7 +8,7 @@
         <table style="width: 100%;">
           <tr>
             <td style="padding-left: 20px; width: 60%;">
-              <table style="width: 40%; ">
+              <table style="width: 70%; ">
                 <tr>
                   <td>Fecha Ultima lectura</td>
                   <td>{{e.lastReadingDate | formatDate}}</td>
@@ -30,7 +30,7 @@
             <td>
                 <button (click)="showReading(e)">Mostrar Lectura</button>
                 <br>
-                <button (click)="showReading(e)">Abrir Electrovalvula</button>
+                <button (click)="openValve(e)">Abrir Electrovalvula</button>
             </td>
           </tr>
         </table>

@@ -3,7 +3,7 @@
 
 
 var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId id" +
-    ", max(m.fecha) lastReadingTime "+
+    ", max(m.fecha) lastReadingDate "+
     ", max(m.valor) lastReadingValue "+
     ", d.nombre name "+
     ", d.ubicacion location "+
@@ -15,10 +15,12 @@ var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId i
     "group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId";
 
 var TODAS_LAS_MEDICIONES_BY_DEVICE = "select * from DAM.Mediciones m where m.dispositivoId = ?";
+var TODAS_LAS_MEDICIONES = "select * from DAM.Mediciones";
+var TODOS_LOS_LOGS_RIEGOS = "select * from DAM.Log_Riegos";
 
 var LOG_RIEGOS_BY_VALVE = "select * from DAM.Log_Riegos r where m.electrovalvulaId = ?";
 
-var INSERTAR_RIEGO = "insert into DAM.Log_riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)";
+var INSERTAR_RIEGO = "insert into DAM.Log_Riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)";
 
 var PORT    = 3000;
 
@@ -37,33 +39,63 @@ var corsOptions = {
 app.use(express.json()); 
 // to serve static files
 app.use(express.static('/home/node/app/static/'));
+
 // to enable cors
 app.use(cors(corsOptions));
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
-};
-app.use(allowCrossDomain);
-
 //=======[ Main module code ]==================================================
 
-// app.get('/test', function(req, res, next) {
-//     res.send({'mensaje': JSON.stringify(req)}).status(200);
-// });
 
-app.get('/devices/', function(req, res, next) {
+app.get('/api/devices/', function(req, res, next) {
+    pool.query(DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS, function(err, devices, fields) {
+        if (err) {
+            res.send(err).status(400);
+            return;
+        }
 
-    pool.query(DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS, function(err, result, fields) {
+        pool.query(TODAS_LAS_MEDICIONES, function(err, mediciones, fields) {
+            if (err) {
+                res.send(err).status(400);
+                return;
+            }
+
+            pool.query(TODOS_LOS_LOGS_RIEGOS,  function(err, riegos, fields) {
+                
+                if (err) {
+                    res.send(err).status(400);
+                    return;
+                }
+
+                for( var i=0 ; i<devices.length ; i++){
+                    var device = devices[i];
+                    var deviceId = device.id;
+                    var valveId = device.electrovalvulaId;
+
+                    var riegosByDevice = riegos.filter(function(r){
+                        return r.electrovalvulaId == valveId;
+                    });
+                
+                    var medicionesByDevice = mediciones.filter(function(m){
+                        return m.dispositivoId == deviceId;
+                    });
+                    
+                    device['riegos'] = riegosByDevice;
+                    device['mediciones'] = medicionesByDevice;
+                }
+
+                res.send(devices);
+            });
+
+        });
+
+
+    });
+});
+
+
+app.get('/api/mediciones/', function(req, res, next) {
+
+    pool.query(TODAS_LAS_MEDICIONES, function(err, result, fields) {
         if (err) {
             res.send(err).status(400);
             return;
@@ -72,7 +104,8 @@ app.get('/devices/', function(req, res, next) {
     });
 });
 
-app.get('/readings/:idDevice', function(req, res, next) {
+
+app.get('/api/mediciones/:idDevice', function(req, res, next) {
 
     var idDevice = req.params.idDevice;
     var sqlParams = [idDevice];
@@ -86,7 +119,20 @@ app.get('/readings/:idDevice', function(req, res, next) {
     });
 });
 
-app.get('/riegos/:idValvula', function(req, res, next) {
+
+app.get('/api/riegos/', function(req, res, next) {
+
+    pool.query(TODOS_LOS_LOGS_RIEGOS,  function(err, result, fields) {
+        if (err) {
+            res.send(err).status(400);
+            return;
+        }
+        res.send(result);
+    });
+});
+
+
+app.get('/api/riegos/:idValvula', function(req, res, next) {
 
     var idValvula = req.params.idValvula;
     var sqlParams = [idValvula];
@@ -101,7 +147,7 @@ app.get('/riegos/:idValvula', function(req, res, next) {
 });
 
 
-app.post('/riegos/', function(req, res, next) {
+app.post('/api/riegos/', function(req, res, next) {
 
     var apertura = req.body.apertura;
     var electrovalvulaId = req.body.electrovalvulaId;

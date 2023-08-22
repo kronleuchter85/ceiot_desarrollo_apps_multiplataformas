@@ -85,12 +85,9 @@ export class ListadoService {
     public httpClient:HttpClient
   ) { }
 
-  // getDispositivos():  Observable<Dispositivo[]> {
-  //    return this.httpClient.get<Dispositivo[]>('http://localhost:8000/devices' , {
-  //     headers: this.corsHeaders
-  //   });
-  // }
-
+  getDispositivos2():  Observable<Dispositivo[]> {
+     return this.httpClient.get<Dispositivo[]>('http://localhost:8000/api/devices' );
+  }
 
   getDispositivos():  Dispositivo[] {
     return this.devices;

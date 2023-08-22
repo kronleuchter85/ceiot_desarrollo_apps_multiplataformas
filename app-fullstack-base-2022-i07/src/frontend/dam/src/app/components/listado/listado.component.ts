@@ -17,40 +17,46 @@ export class ListadoComponent {
   devices : Dispositivo[] = [];
 
   constructor( private listadoServ:ListadoService ) { 
-    this.devices = listadoServ.getDispositivos();
-    // this.listadoServ.getDispositivos().subscribe( data => {
-    //   console.log(data);
-    // });
+    // this.devices = listadoServ.getDispositivos();
+    this.listadoServ.getDispositivos2().subscribe(data => {
+      console.log("recibiendo dispositivos");
+      console.log(data);
+      this.devices = data;
+    });
 
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
-  public logConsola(){
-    console.log("Aceptar");
-    console.log(this.nombre);
-    console.log(this.apellido);
-  }
+  // public logConsola(){
+  //   console.log("Aceptar");
+  //   console.log(this.nombre);
+  //   console.log(this.apellido);
+  // }
 
-  cambiar(){
-    console.log(this.estaHabilitado);
-    this.estaHabilitado=!this.estaHabilitado;
-    console.log("Lo cambio por " + this.estaHabilitado);
-  }
+  // cambiar(){
+  //   console.log(this.estaHabilitado);
+  //   this.estaHabilitado=!this.estaHabilitado;
+  //   console.log("Lo cambio por " + this.estaHabilitado);
+  // }
 
-  invocarListado(){
-    this.listadoServ.getDispositivos();
-  }
+  // invocarListado(){
+  //   this.listadoServ.getDispositivos();
+  // }
 
 
-  onClick(v:any){
-    alert(v);
-    this.listadoServ.setRefresh(32);
-    this.cambiar();
-  }
+  // onClick(v:any){
+  //   alert(v);
+  //   this.listadoServ.setRefresh(32);
+  //   this.cambiar();
+  // }
 
   showReading(d:Dispositivo){
     this.listadoServ.setRefresh(d.lastReadingValue);
+  }
+
+
+  openValve(d:Dispositivo){
+
   }
 }

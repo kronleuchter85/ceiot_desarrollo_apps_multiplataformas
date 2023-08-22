@@ -18,9 +18,13 @@ export class ShowReadingDirective {
     console.log("id elemento: " + this.el.nativeElement.id);
 
     var index = this.el.nativeElement.id;
-    var device = this.listadoServ.getDispositivos()[Number(index)];
-    console.log(device);
+    var device = this.listadoServ.getDispositivos()[index];
     this.listadoServ.setRefresh(device.lastReadingValue);
+    // this.listadoServ.getDispositivos().subscribe(devices => {
+    //   var device = devices[index];
+    //   console.log(device);
+    //   this.listadoServ.setRefresh(device.lastReadingValue);
+    // });
   }
 
 
