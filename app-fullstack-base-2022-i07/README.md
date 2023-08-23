@@ -1,34 +1,39 @@
-Web App Full Stack Base - Ionic frontend
+# Universidad de Buenos Aires - Especializacion en Internet de las Cosas
+# Asignatura Desarrollo de Aplicaciones Multiplataforma
+# Trabajo Practico integrador
+## Alumno Gonzalo Carreno
 ========================================
 
-Proyecto basado en [Web App Full Stack Base](https://github.com/gotoiot/app-fullstack-base).
+Pasos para ejecutar el proyecto
 
-En esta extensión del proyecto se utiliza el framework ionic para realizar el frontend.
+1) Ejecutar el comando npm install 
 
-## Comenzando 🚀
+2) Levantar el proyecto mediante docker-compose up: Esto deberia crear el contenedor con la aplicacion instalando las dependencias necesarias. 
+3) Ejecutar los scrpits de carga estructuras y datos mediante la interfaz web de MySQL publicada en http://localhost:8001 
 
-Esta sección es una guía con los pasos esenciales para que puedas poner en marcha la aplicación.
+4) Acceder al frontend en http://localhost:8100 y ejecutar la aplicacion.
 
-### Instalar las dependencias
+Notas del disenio del sistema:
+=========================================
 
-Para correr este proyecto es necesario que instales `Docker` y `Docker Compose`. 
+Componentes:
+ - Directiva showReading
+ - Pipe formatDate
+ - Service listadoService
+ - Componentes:
+    - Detalle-Sensor
+    - Listado
+- Interfaces
+    - Dispositivo
+    - Medicion
+    - Riego
 
-En [este artículo](https://www.gotoiot.com/pages/articles/docker_installation_linux/) publicado en nuestra web están los detalles para instalar Docker y Docker Compose en una máquina Linux. Si querés instalar ambas herramientas en una Raspberry Pi podés seguir [este artículo](https://www.gotoiot.com/pages/articles/rpi_docker_installation) de nuestra web que te muestra todos los pasos necesarios.
+APIs provistas en Express:
+- GET /api/devices/
+- GET /api/mediciones/
+- GET /api/mediciones/last/<idDevice>
+- GET /api/riegos/
+- GET /api/riegos/last/<idDevice>
+- POST /api/mediciones/
+- POST /api/riegos/
 
-En caso que quieras instalar las herramientas en otra plataforma o tengas algún incoveniente, podes leer la documentación oficial de [Docker](https://docs.docker.com/get-docker/) y también la de [Docker Compose](https://docs.docker.com/compose/install/).
-
-Continua con la descarga del código cuando tengas las dependencias instaladas y funcionando.
-
-### Ejecutar la aplicación
-
-Para ejecutar la aplicación tenes que correr el comando `docker compose up` desde la raíz del proyecto. Este comando va a descargar las imágenes de Docker de node, de typescript, de la base datos y del admin de la DB, y luego ponerlas en funcionamiento. 
-
-Para acceder al cliente web ingresa a a la URL [http://localhost:8100/](http://localhost:8100/) y para acceder al admin de la DB accedé a [localhost:8001/](http://localhost:8001/). 
-
-Si pudiste acceder al cliente web y al administrador significa que la aplicación se encuentra corriendo bien. 
-
-> Si te aparece un error la primera vez que corres la app, deteńe el proceso y volvé a iniciarla. Esto es debido a que el backend espera que la DB esté creada al iniciar, y en la primera ejecución puede no alcanzar a crearse. A partir de la segunda vez el problema queda solucionado.
-
-## Licencia 📄
-
-Este proyecto está bajo Licencia ([MIT](https://choosealicense.com/licenses/mit/)). Podés ver el archivo [LICENSE.md](LICENSE.md) para más detalles sobre el uso de este material.
