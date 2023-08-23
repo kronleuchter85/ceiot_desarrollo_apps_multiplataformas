@@ -64,14 +64,11 @@ Consideraciones para el cumplimiento de los requerimientos
 Algunas capturas de pantalla del producto terminado:
 ===================================================
 
-
 Accediendo al home del proyecto en http://localhost:8100
 ![alt text](./doc/images/img1.png)
 
-
 Luego al navegar los distintos dispositivos podemos apreciar la información de cada uno, su estado y los botones disponibles para renderizar la última lectura y abrirla electroválvula. Notas que igualmente al desplegar el sensor el valor de su última lectura se renderiza en el componente gráfico automáticamente.
 ![alt text](./doc/images/img2.png)
-
 
 Luego podemos explorar las diferentes mediciones y riegos disponibles para cada sensor. En caso de no contar con ninguno se oculta el menú accordion.
 ![alt text](./doc/images/img3.png)
