@@ -7,8 +7,10 @@ export class FormatDatePipe implements PipeTransform {
 
   transform(value: string, ...args: unknown[]): string {
     
-    return new Date(value).toDateString()
-  
+    var d = new Date(value);
+    var formatedDate = d.toJSON().slice(0, 19).replace('T', ' ');
+
+    return formatedDate;
   }
 
 }

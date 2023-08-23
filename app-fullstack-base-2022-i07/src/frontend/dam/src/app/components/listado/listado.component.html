@@ -10,6 +10,14 @@
             <td style="padding-left: 20px; width: 60%;">
               <table style="width: 70%; ">
                 <tr>
+                  <td>Id Sensor</td>
+                  <td>{{e.id}}</td>
+                </tr>
+                <tr>
+                  <td>Estado Sensor</td>
+                  <td>{{e.state}}</td>
+                </tr>
+                <tr>
                   <td>Fecha Ultima lectura</td>
                   <td>{{e.lastReadingDate | formatDate}}</td>
                 </tr>
@@ -30,7 +38,12 @@
             <td>
                 <button (click)="showReading(e)">Mostrar Lectura</button>
                 <br>
-                <button (click)="openValve(e)">Abrir Electrovalvula</button>
+                <div *ngIf="e.state == false">
+                  <button (click)="openValve(e)">Abrir Electrovalvula</button>
+                </div>
+                <div *ngIf="e.state == true">
+                  <button (click)="closeValve(e)">Cerrar Electrovalvula</button>
+                </div>
             </td>
           </tr>
         </table>

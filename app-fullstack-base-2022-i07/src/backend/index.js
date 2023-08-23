@@ -9,6 +9,7 @@ var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId i
     ", d.ubicacion location "+
     ", e.nombre valveName "+
     ", e.ElectrovalvulaId valveId "+
+    ", (select r.apertura from DAM.Log_Riegos r where r.ElectrovalvulaId = d.ElectrovalvulaId order by r.fecha desc limit 1) state " +
     "from DAM.Dispositivos d "+
     "join DAM.Mediciones m on m.DispositivoId = d.DispositivoId "+
     "join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId "+
@@ -16,7 +17,6 @@ var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId i
 
 var TODAS_LAS_MEDICIONES = "select medicionId id, valor, fecha, dispositivoId from DAM.Mediciones";
 var TODOS_LOS_LOGS_RIEGOS = "select logRiegoId id, fecha, electrovalvulaId, apertura from DAM.Log_Riegos";
-
 
 var ULTIMA_MEDICION_POR_DISPOSITIVO = "select DISTINCT " +
     "m.medicionId id " +
@@ -29,16 +29,25 @@ var ULTIMA_MEDICION_POR_DISPOSITIVO = "select DISTINCT " +
     "order by valor desc " +
     "limit 1 ";
 
-var INSERTAR_RIEGO = "insert into DAM.Log_Riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)";
+var INSERTAR_RIEGO = "insert into DAM.Log_Riegos (electrovalvulaId , apertura , fecha) values (? , ? , ?)";
 
-var TODAS_LAS_MEDICIONES_BY_DEVICE = "select * from DAM.Mediciones m where m.dispositivoId = ?";
-var LOG_RIEGOS_BY_VALVE = "select * from DAM.Log_Riegos r where m.electrovalvulaId = ?";
+var INSERTAR_MEDICION = "insert into DAM.Mediciones (dispositivoId, fecha, valor) values (?,?,?)";
+
+var ULTIMO_LOG_RIEGO_BY_DEVICE = "select " +
+    " r.apertura, " +
+    " r.fecha, "+
+    " r.ElectrovalvulaId electrovalvulaId, "+
+    " r.logRiegoId id "+
+    "from DAM.Log_Riegos r "+
+    "join DAM.Dispositivos d on d.ElectrovalvulaId = r.ElectrovalvulaId "+
+    "where r.ElectrovalvulaId = ? "+
+    "order by fecha DESC "+
+    "limit 1 ";
 
 
 var PORT    = 3000;
 
 const cors = require('cors');
-
 var express = require('express');
 var app     = express();
 var pool   = require('./mysql-connector');
@@ -82,7 +91,7 @@ app.get('/api/devices/', function(req, res, next) {
                 for( var i=0 ; i<devices.length ; i++){
                     var device = devices[i];
                     var deviceId = device.id;
-                    var valveId = device.electrovalvulaId;
+                    var valveId = device.valveId;
 
                     var riegosByDevice = riegos.filter(function(r){
                         return r.electrovalvulaId == valveId;
@@ -94,14 +103,15 @@ app.get('/api/devices/', function(req, res, next) {
                     
                     device['riegos'] = riegosByDevice;
                     device['mediciones'] = medicionesByDevice;
+
+                    if(device['state'] == null)
+                        device['state'] = 0;
+
                 }
 
                 res.send(devices);
             });
-
         });
-
-
     });
 });
 
@@ -140,35 +150,25 @@ app.get('/api/riegos/', function(req, res, next) {
 });
 
 
-// app.get('/api/riegos/:idValvula', function(req, res, next) {
+app.post('/api/mediciones/', function(req, res, next) {
 
-//     var idValvula = req.params.idValvula;
-//     var sqlParams = [idValvula];
+    var dispositivoId = req.body.dispositivoId;
+    var fecha = req.body.fecha;
+    var valor = req.body.valor;
+    var sqlParams = [dispositivoId, fecha,  valor];
 
-//     pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
-//         if (err) {
-//             res.send(err).status(400);
-//             return;
-//         }
-//         res.send(result);
-//     });
-// });
+    console.log(req.body);
 
-
-// app.get('/api/mediciones/:idDevice', function(req, res, next) {
-
-//     var idDevice = req.params.idDevice;
-//     var sqlParams = [idDevice];
-
-//     pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
-//         if (err) {
-//             res.send(err).status(400);
-//             return;
-//         }
-//         res.send(result);
-//     });
-// });
-
+    pool.query(INSERTAR_MEDICION, sqlParams, function(err, result, fields) {
+        if (err) {
+            console.log(err);
+            res.send(err).status(400);
+            return;
+        }
+        console.log(result);
+        res.send(result);
+    });
+});
 
 
 app.post('/api/riegos/', function(req, res, next) {
@@ -176,29 +176,33 @@ app.post('/api/riegos/', function(req, res, next) {
     var apertura = req.body.apertura;
     var electrovalvulaId = req.body.electrovalvulaId;
     var fecha = req.body.fecha;
-    var sqlParams = [apertura, electrovalvulaId,  fecha];
+    var sqlParams = [electrovalvulaId, apertura,  fecha];
 
     console.log(req.body);
 
-    // pool.query(INSERTAR_RIEGO, sqlParams, function(err, result, fields) {
-    //     if (err) {
-    //         res.send(err).status(400);
-    //         return;
-    //     }
-    //     res.send(result);
-    // });
+    pool.query(INSERTAR_RIEGO, sqlParams, function(err, result, fields) {
+        if (err) {
+            console.log(err);
+            res.send(err).status(400);
+            return;
+        }
+        console.log(result);
+        res.send(result);
+    });
 });
 
-// app.get('/devices/', function(req, res, next) {
-//     pool.query('Select * from Dispositivos', function(err, result, fields) {
-//         if (err) {
-//             res.send(err).status(400);
-//             return;
-//         }
-//         res.send(result);
-//     });
-// });
 
+app.get('/api/riegos/last/:idDevice', function(req, res, next) {
+    var idDevice = req.params.idDevice;
+    var sqlParams = [idDevice];
+    pool.query(ULTIMO_LOG_RIEGO_BY_DEVICE, sqlParams , function(err, result, fields) {
+        if (err) {
+            res.send(err).status(400);
+            return;
+        }
+        res.send(result);
+    });
+});
 
 
 app.listen(PORT, function(req, res) {

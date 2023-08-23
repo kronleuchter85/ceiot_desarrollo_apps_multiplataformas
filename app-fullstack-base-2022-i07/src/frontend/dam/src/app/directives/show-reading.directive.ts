@@ -25,16 +25,6 @@ export class ShowReadingDirective {
         this.listadoServ.setRefresh(lastReading);
       }
     });
-    // this.listadoServ.setRefresh(deviceId);
-
-    // var index = this.el.nativeElement.id;
-    // var device = this.listadoServ.getDispositivos()[index];
-    // this.listadoServ.setRefresh(device.lastReadingValue);
-    // this.listadoServ.getDispositivos2().subscribe(devices => {
-    //   var device = devices[index];
-    //   console.log(device);
-    //   this.listadoServ.setRefresh(device.lastReadingValue);
-    // });
   }
 
 

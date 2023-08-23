@@ -23,3 +23,5 @@ select DISTINCT
 from DAM.Mediciones m 
 order by m.fecha DESC
 limit 1
+
+

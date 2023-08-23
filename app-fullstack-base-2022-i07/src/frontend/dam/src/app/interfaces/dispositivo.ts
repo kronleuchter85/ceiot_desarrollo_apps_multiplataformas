@@ -10,6 +10,7 @@ export interface Dispositivo {
     valveName: string,
     valveId: number,
     riegos: Riego[],
-    mediciones: Medicion[]
+    mediciones: Medicion[],
+    state: boolean
 
 }
