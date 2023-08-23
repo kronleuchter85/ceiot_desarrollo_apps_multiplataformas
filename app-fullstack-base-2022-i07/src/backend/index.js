@@ -14,13 +14,26 @@ var DISPOSITIVOS_ELECTROVALVULAS_Y_LECTURAS = "select DISTINCT m.DispositivoId i
     "join DAM.Electrovalvulas e on e.ElectrovalvulaId = d.ElectrovalvulaId "+
     "group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId";
 
-var TODAS_LAS_MEDICIONES_BY_DEVICE = "select * from DAM.Mediciones m where m.dispositivoId = ?";
-var TODAS_LAS_MEDICIONES = "select * from DAM.Mediciones";
-var TODOS_LOS_LOGS_RIEGOS = "select * from DAM.Log_Riegos";
+var TODAS_LAS_MEDICIONES = "select medicionId id, valor, fecha, dispositivoId from DAM.Mediciones";
+var TODOS_LOS_LOGS_RIEGOS = "select logRiegoId id, fecha, electrovalvulaId, apertura from DAM.Log_Riegos";
 
-var LOG_RIEGOS_BY_VALVE = "select * from DAM.Log_Riegos r where m.electrovalvulaId = ?";
+
+var ULTIMA_MEDICION_POR_DISPOSITIVO = "select DISTINCT " +
+    "m.medicionId id " +
+    ", max(m.fecha) fecha " +
+    ", max(m.valor) valor " + 
+    ", m.dispositivoId " +
+    "from DAM.Mediciones m " +
+    "where m.dispositivoId = ? "+
+    "group by medicionId , m.dispositivoId " +
+    "order by valor desc " +
+    "limit 1 ";
 
 var INSERTAR_RIEGO = "insert into DAM.Log_Riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)";
+
+var TODAS_LAS_MEDICIONES_BY_DEVICE = "select * from DAM.Mediciones m where m.dispositivoId = ?";
+var LOG_RIEGOS_BY_VALVE = "select * from DAM.Log_Riegos r where m.electrovalvulaId = ?";
+
 
 var PORT    = 3000;
 
@@ -92,7 +105,6 @@ app.get('/api/devices/', function(req, res, next) {
     });
 });
 
-
 app.get('/api/mediciones/', function(req, res, next) {
 
     pool.query(TODAS_LAS_MEDICIONES, function(err, result, fields) {
@@ -104,13 +116,10 @@ app.get('/api/mediciones/', function(req, res, next) {
     });
 });
 
-
-app.get('/api/mediciones/:idDevice', function(req, res, next) {
-
+app.get('/api/mediciones/last/:idDevice', function(req, res, next) {
     var idDevice = req.params.idDevice;
     var sqlParams = [idDevice];
-
-    pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
+    pool.query(ULTIMA_MEDICION_POR_DISPOSITIVO, sqlParams , function(err, result, fields) {
         if (err) {
             res.send(err).status(400);
             return;
@@ -118,7 +127,6 @@ app.get('/api/mediciones/:idDevice', function(req, res, next) {
         res.send(result);
     });
 });
-
 
 app.get('/api/riegos/', function(req, res, next) {
 
@@ -132,19 +140,35 @@ app.get('/api/riegos/', function(req, res, next) {
 });
 
 
-app.get('/api/riegos/:idValvula', function(req, res, next) {
+// app.get('/api/riegos/:idValvula', function(req, res, next) {
 
-    var idValvula = req.params.idValvula;
-    var sqlParams = [idValvula];
+//     var idValvula = req.params.idValvula;
+//     var sqlParams = [idValvula];
 
-    pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
-        if (err) {
-            res.send(err).status(400);
-            return;
-        }
-        res.send(result);
-    });
-});
+//     pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
+//         if (err) {
+//             res.send(err).status(400);
+//             return;
+//         }
+//         res.send(result);
+//     });
+// });
+
+
+// app.get('/api/mediciones/:idDevice', function(req, res, next) {
+
+//     var idDevice = req.params.idDevice;
+//     var sqlParams = [idDevice];
+
+//     pool.query(TODAS_LAS_MEDICIONES_BY_DEVICE, sqlParams, function(err, result, fields) {
+//         if (err) {
+//             res.send(err).status(400);
+//             return;
+//         }
+//         res.send(result);
+//     });
+// });
+
 
 
 app.post('/api/riegos/', function(req, res, next) {
@@ -154,13 +178,15 @@ app.post('/api/riegos/', function(req, res, next) {
     var fecha = req.body.fecha;
     var sqlParams = [apertura, electrovalvulaId,  fecha];
 
-    pool.query(INSERTAR_RIEGO, sqlParams, function(err, result, fields) {
-        if (err) {
-            res.send(err).status(400);
-            return;
-        }
-        res.send(result);
-    });
+    console.log(req.body);
+
+    // pool.query(INSERTAR_RIEGO, sqlParams, function(err, result, fields) {
+    //     if (err) {
+    //         res.send(err).status(400);
+    //         return;
+    //     }
+    //     res.send(result);
+    // });
 });
 
 // app.get('/devices/', function(req, res, next) {

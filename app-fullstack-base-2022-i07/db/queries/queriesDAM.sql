@@ -13,3 +13,13 @@ group by m.DispositivoId , d.nombre , d.ubicacion , e.nombre, e.ElectrovalvulaId
 
 
 insert into DAM.Log_riegos (ElectrovalvulaId , valor , fecha) values (? , ? , ?)
+
+
+select DISTINCT 
+	m.medicionId
+    , m.fecha
+    , m.valor lastReading 
+    , m.dispositivoId
+from DAM.Mediciones m 
+order by m.fecha DESC
+limit 1

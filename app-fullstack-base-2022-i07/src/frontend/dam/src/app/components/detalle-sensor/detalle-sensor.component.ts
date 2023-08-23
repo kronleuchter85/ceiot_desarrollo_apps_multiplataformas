@@ -47,6 +47,8 @@ export class DetalleSensorComponent implements OnInit {
   }
 
   updateChart(value:number){
+
+    console.log('actualizando reloj: ' + value);
     this.valorObtenido=value;
     this.myChart.update({series: [{
       name: 'kPA',

@@ -52,11 +52,13 @@ export class ListadoComponent {
   // }
 
   showReading(d:Dispositivo){
-    this.listadoServ.setRefresh(d.lastReadingValue);
+    console.log(Number(d.lastReadingValue));
+    this.listadoServ.setRefresh(Number(d.lastReadingValue));
   }
 
 
   openValve(d:Dispositivo){
 
+    // this.listadoServ.createLogRiego()
   }
 }

@@ -15,12 +15,22 @@ export class ShowReadingDirective {
   }
 
   @HostListener('click') mouseClick(){
-    console.log("id elemento: " + this.el.nativeElement.id);
+    var deviceId = Number(this.el.nativeElement.id);
+    console.log("id de dispositivo a mostrar: " + deviceId);
+    this.listadoServ.getLastReadingByDevice(deviceId).subscribe(data => {
+      if(data.length > 0){
 
-    var index = this.el.nativeElement.id;
-    var device = this.listadoServ.getDispositivos()[index];
-    this.listadoServ.setRefresh(device.lastReadingValue);
-    // this.listadoServ.getDispositivos().subscribe(devices => {
+        var lastReading = Number(data[0].valor);
+        console.log(lastReading);
+        this.listadoServ.setRefresh(lastReading);
+      }
+    });
+    // this.listadoServ.setRefresh(deviceId);
+
+    // var index = this.el.nativeElement.id;
+    // var device = this.listadoServ.getDispositivos()[index];
+    // this.listadoServ.setRefresh(device.lastReadingValue);
+    // this.listadoServ.getDispositivos2().subscribe(devices => {
     //   var device = devices[index];
     //   console.log(device);
     //   this.listadoServ.setRefresh(device.lastReadingValue);
